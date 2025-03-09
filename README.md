@@ -1,98 +1,117 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 Guide des Bonnes Pratiques Git & GitFlow
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📌 Branches principales
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### `main`
 
-## Description
+- Contient le code **stable** en production.
+- Ne jamais pousser directement dessus.
+- Seules les **develop branche** et les **hotfixes** y sont mergées.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### `develop`
 
-## Project setup
+- Contient le dernier code **validé**.
+- Toutes les nouvelles fonctionnalités partent de `develop`.
 
-```bash
-$ npm install
-```
+---
 
-## Compile and run the project
+## 🌱 Branches de développement
+
+### Feature branches (`feature/nom-feature`)
+
+- Pour développer une **nouvelle fonctionnalité**.
+- Créée à partir de `develop`.
+- Merge **uniquement** dans `develop`.
+- Nom explicite (`feature/login-page` et non `feature/authentication`).
+
+#### 📌 Création d'une feature branch
 
 ```bash
-# development
-$ npm run start
+# Se placer sur develop
+git checkout develop
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Créer une nouvelle branche feature
+git checkout -b feature/login-page
 ```
 
-## Run tests
+#### 📌 Pousser une feature branch
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git push origin feature/login-page
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+#### 📌 Fusionner une feature branch après validation
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+git checkout develop
+git merge feature/login-page
+git push origin develop
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### 📌 Merge de la develop dans `main`
 
-## Resources
+```bash
+git checkout main
+git merge develop
+git push origin main
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### Hotfix branches (`hotfix/x.y.z`)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Utilisée pour **corriger un bug urgent** en production.
+- Créée depuis `main`, merge dans `main` et `develop`.
 
-## Support
+#### 📌 Création d’un hotfix
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+git checkout main
+git checkout -b hotfix/1.0.1
+```
 
-## Stay in touch
+#### 📌 Merge du hotfix
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+git checkout main
+git merge hotfix/1.0.1
+git push origin main
 
-## License
+git checkout develop
+git merge hotfix/1.0.1
+git push origin develop
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## 🏷️ Gestion des Tags
+
+Les **tags** permettent d’identifier les versions stables.
+
+#### 📌 Création d’un tag versionné
+
+```bash
+git tag -a v1.0.0 -m "Release version 1.0.0"
+git push origin v1.0.0
+```
+
+#### 📌 Voir tous les tags
+
+```bash
+git tag
+```
+
+#### 📌 Supprimer un tag
+
+```bash
+git tag -d v1.0.0
+git push origin --delete v1.0.0
+```
+
+---
+
+## 📝 Bonnes pratiques
+
+✅ Toujours travailler sur une **feature branch** et non sur `develop` ou `main`. ✅ Écrire des **messages de commit clairs**. ✅ Toujours **mettre à jour **`` avant de créer une nouvelle branche. ✅ Faire une **pull request** et demander une revue avant de merger. ✅ Supprimer une **feature branch** après le merge pour garder un repo propre.
+
+---
+
+Avec cette méthodologie, nous assurons un workflow propre, structuré et efficace. 🚀🔥
