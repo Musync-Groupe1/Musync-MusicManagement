@@ -8,7 +8,7 @@ import { KeycloakConnectModule } from "nest-keycloak-connect";
 import { keycloakConfig } from "./keycloak.config";
 
 @Module({
-    imports: [HttpModule],
+    imports: [HttpModule, KeycloakConnectModule.register(keycloakConfig)],
     controllers: [AuthController],
     providers: [AuthService, PrismaService, KafkaService],
     exports: [AuthService]

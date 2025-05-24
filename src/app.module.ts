@@ -14,6 +14,19 @@ import { APP_GUARD } from '@nestjs/core';
             AuthModule,
             PrismaModule,
             KafkaModule,
+            KeycloakConnectModule.register(keycloakConfig),
+  ],
+
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard, 
+    },
   ],
 
 })

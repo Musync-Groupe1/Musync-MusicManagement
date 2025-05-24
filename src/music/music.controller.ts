@@ -3,12 +3,15 @@ import { MusicService } from "./music.service";
 import { Response } from 'express';
 import { request } from "http";
 import { SetMediaDto } from "./dto";
+import { AuthGuard, Resource, RoleGuard, Roles } from "nest-keycloak-connect";
 
 @Controller('music')
+@UseGuards(AuthGuard, RoleGuard)
 export class MusicController{
     constructor(private musicService: MusicService){}
 
     @Post('setMedia')
+    @Roles('user')
     setUserMedia(
         @Body() dto: SetMediaDto,
     ){
@@ -205,3 +208,4 @@ export class MusicController{
     } 
 
 }   
+

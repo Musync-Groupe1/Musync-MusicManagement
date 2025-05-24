@@ -8,8 +8,9 @@ import { KeycloakConnectModule } from "nest-keycloak-connect";
 import { keycloakConfig } from "./auth/keycloak.config";
 
 @Module({
-    imports: [HttpModule, ConfigModule.forRoot(), KafkaModule,KeycloakConnectModule.register(keycloakConfig)],
+    imports: [HttpModule, ConfigModule.forRoot(), KafkaModule, KeycloakConnectModule.register(keycloakConfig)],
     controllers: [MusicController],
     providers: [MusicService],
 })
 export class MusicModule {}   
+
